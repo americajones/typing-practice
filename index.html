@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Typing Practice</title>
+    <script src="wordbank.js"></script>
+</head>
+
+<body>
+    <!-- toggle light and dark mode, toggle show keyboard on screen, make letterArray go up or down-->
+    <div id="heartBox">
+        <!-- <div class="pixelheartBIG"></div> -->
+    </div>
+    <div id="settings">
+        <div id="letterCount">
+            <div id="numBox"></div>
+            <div class="letterCountDown">
+                <button onclick="letterCountDown()">-</button>
+            </div>
+            <div class="letterCountUp">
+                <button onclick="letterCountUp()">+</button>
+            </div>
+        </div>
+        <div id="wordCount">
+            <div id="wordNumBox"></div>
+            <div class="wordCountDown">
+                <button onclick="wordCountDown()">-</button>
+            </div>
+            <div class="wordCountUp">
+                <button onclick="wordCountUp()">+</button>
+            </div>
+        </div>
+    </div>
+    <div id="toType" autofocus></div>
+    <div id="onScreenKeyboard"></div>
+    <script src="script.js"></script>
+</body>
+
+</html>
