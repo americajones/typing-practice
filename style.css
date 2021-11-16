@@ -10,6 +10,7 @@ body {
     font-size: 2rem;
     padding: 1rem;
     margin: 2rem;
+    background-color: rgb(17, 17, 19);
 }
 #settings {
     display: flex;
@@ -25,7 +26,8 @@ button {
     border: none;
     padding: 5px 10px;
     margin: 0 .25rem;
-    background-color: rgb(100, 100, 100);
+    color: white;
+    background-color: rgb(157, 84, 84);
     border-radius: 2px;
 }
 .white {
@@ -63,4 +65,18 @@ button {
       3em 4em #f22613, 4em 4em #f22613, 3em 5em #f22613;
     margin-right: 8em;
     margin-bottom: 8em;
+    transform:scale(2.75);
+  }
+  .blips {
+    position: absolute;
+    top: 300px;
+    left: 300px;
+    display: block;
+    width: 1px;
+    height: 1px;
+    background-color: #d0ff00;
+    /* box-shadow: 2px 0px #d0ff00, 3px 0px #d0ff00, 4px 0px #d0ff00, 1px 1px #d0ff00,
+      1px 2px #d0ff00, 1px 3px #d0ff00, 5px 1px #d0ff00, 5px 2px #d0ff00,
+      2px 4px #d0ff00, 3px 4px #d0ff00, 4px 4px #d0ff00, 5px 3px #d0ff00; */
+    transform:scale(1.25);
   }
