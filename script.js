@@ -525,7 +525,7 @@ function continueTestZH() {
         document.addEventListener("keyup", (event) => {
             console.log(event.key);
             event.preventDefault();
-            // console.log("SHOULD BE:", testingChar);
+            console.log("SHOULD BE:", testingChar);
             if (testingChar === "_" && event.code === "Space") {
                 addHeart();
                 continueTestZH();

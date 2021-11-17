@@ -27,17 +27,12 @@ body {
 #onScreenKeyboard {
   width: 80vw;
   margin: auto;
+  margin-top: 5rem;
 }
-#engKeyboard {
+#onScreenKeyboard img{
   margin: auto;
-  margin-top: 3rem;
-  width: inherit;
 }
-#zhKeyboard {
-  margin: auto;
-  margin-top: 3rem;
-  width: inherit;
-}
+
 button {
     border: none;
     padding: 5px 10px;
