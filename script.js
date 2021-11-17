@@ -4,6 +4,8 @@ const toTypeBox = document.querySelector('#toType');
 const numBox = document.querySelector('#numBox');
 var heartDivs = document.querySelectorAll('.pixelheart');
 var heartBox = document.querySelector('#heartBox');
+var checkBox = document.querySelector('#imgToggle');
+var keyboardImg = document.querySelector('#engKeyboard')
 let num = 6;
 let numberOfWords = 25;
 // let letterListArr = ["a", "s", "d", "f", "j", "k", "l", "e", "n", "i", "o", "b", "u", "t"];
@@ -254,7 +256,14 @@ function addStar() {
     nuDiv.style.left = randomLeft + 'px';
     heartBox.append(nuDiv)
 }
+function toggleImg() {
+    if (checkBox.checked == true) {
+        keyboardImg.style.display = "block";
+    } else {
+        keyboardImg.style.display = "none";
+    }
 
+}
 // console.log(heartDivs);
 // for (var i = 0; i < heartDivs.length; i++) {
 //     var thisDiv = heartDivs[i];

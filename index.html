@@ -25,6 +25,9 @@
                 <button onclick="letterCountUp()">+</button>
             </div>
         </div>
+        <div id="keyboardToggle">
+            show keyboard? <input type="checkbox" id="imgToggle" onclick="toggleImg()">
+        </div>
         <div id="wordCount">
             <div id="wordNumBox"></div>
             <div class="wordCountDown">
@@ -36,7 +39,9 @@
         </div>
     </div>
     <div id="toType" autofocus></div>
-    <div id="onScreenKeyboard"></div>
+    <div id="onScreenKeyboard">
+        <img id="engKeyboard" src="engKeyboard.png" style="display: none;">
+    </div>
     <script src="script.js"></script>
 </body>
 

@@ -1,7 +1,9 @@
 body {
     background-color: rgb(17, 17, 19);
     color: rgb(226, 238, 238);
-    width: 100vw;
+    width: 80vw;
+    margin: auto;
+    padding: 1em;
 }
 #toType {
     display: flex;
@@ -21,6 +23,15 @@ body {
 }
 #wordCount {
     display: flex;
+}
+#onScreenKeyboard {
+  width: 80vw;
+  margin: auto;
+}
+#engKeyboard {
+  margin: auto;
+  margin-top: 3rem;
+  width: inherit;
 }
 button {
     border: none;
