@@ -21,15 +21,19 @@ let thisNum = 0;
 let testingChar;
 let ZH = false;
 function switchLang() {
-    if (ZH == false) {
+    if (ZH === false) {
         ZH = true;
         num = 8;
-        toggleImg();
+        keyboardImgENG.style.display = "none";
+        checkBox.checked = false;
         pickWordsZH();
+        toTypeBox.focus();
     } else {
         ZH = false
-        toggleImg();
+        keyboardImgZH.style.display = "none";
+        checkBox.checked = false;
         pickWords();
+        toTypeBox.focus();
     }
 }
 if (ZH) {
@@ -45,6 +49,7 @@ function letterCountDown() {
         } else {
             num--;
             pickWordsZH();
+            toTypeBox.focus();
         }
     } else {
         if (num === 5) {
@@ -52,6 +57,7 @@ function letterCountDown() {
         } else {
             num--;
             pickWords();
+            toTypeBox.focus();
         }
     };
 }
@@ -62,6 +68,7 @@ function letterCountUp() {
         } else {
             num++;
             pickWordsZH();
+            toTypeBox.focus();
         }
     } else {
         if (num === 26) {
@@ -69,6 +76,7 @@ function letterCountUp() {
         } else {
             num++;
             pickWords();
+            toTypeBox.focus();
         }
     }
 }
@@ -79,6 +87,7 @@ function wordCountDown() {
         } else {
             numberOfWords--;
             pickWordsZH();
+            toTypeBox.focus();
         }
     } else {
         if (numberOfWords === 10) {
@@ -86,6 +95,7 @@ function wordCountDown() {
         } else {
             numberOfWords--;
             pickWords();
+            toTypeBox.focus();
         }
     }
 };
@@ -96,6 +106,7 @@ function wordCountUp() {
         } else {
             numberOfWords++;
             pickWordsZH();
+            toTypeBox.focus();
         }
     } else {
         if (numberOfWords === 45) {
@@ -103,6 +114,7 @@ function wordCountUp() {
         } else {
             numberOfWords++;
             pickWords();
+            toTypeBox.focus();
         }
     }
 }
@@ -114,11 +126,10 @@ function pickWordsZH() {
     let letterList = fullLetterListZH.substring(0, num);
     numBox.textContent = num + " letters";
     wordNumBox.textContent = numberOfWords + " words";
+    // console.log(letterList)
     zhuyinWords.forEach(word => {
         wordArray = [];
         for (let i = 0; i < word.length; i++) {
-            console.log(letterList);
-            console.log(word[i]);
             if (!letterList.includes(word[i])) {
                 // console.log("YES: ", word);
                 // wordArray.push(word);
@@ -127,13 +138,14 @@ function pickWordsZH() {
                 wordArray.push(word);
             }
         }
-        // console.log(wordArray)
         // console.log(wordArray.length)
         if (wordArray.length === word.length) {
             // console.log(word);
             toTypeArr.push(word);
         };
     });
+    // console.log(wordArray)
+    // console.log(toTypeArr)
     shuffleAndPostZH();
 }
 function pickWords() {
@@ -155,8 +167,6 @@ function pickWords() {
                 wordArray.push(word);
             }
         }
-        // console.log(wordArray)
-        // console.log(wordArray.length)
         if (wordArray.length === word.length) {
             // console.log(word);
             toTypeArr.push(word);
@@ -187,6 +197,7 @@ function shuffleAndPost() {
         nuDiv.innerHTML = nuItem;
         toTypeBox.append(nuDiv)
     })
+    toTypeBox.focus();
     initiateTest();
 }
 function shuffleAndPostZH() {
@@ -212,6 +223,7 @@ function shuffleAndPostZH() {
         nuDiv.innerHTML = nuItem;
         toTypeBox.append(nuDiv)
     })
+    toTypeBox.focus();
     initiateTestZH();
 }
 function initiateTest() {
@@ -221,21 +233,135 @@ function initiateTest() {
     testingChar = toTypeBox.textContent.charAt(thisNum);
     document.addEventListener("keyup", (event) => {
         // console.log(event.key);
+        event.preventDefault();
         if (event.key === testingChar) {
             continueTest();
         }
     }, { once: true });
 };
 const ZHkeyboard = {}
+let testingCharCode;
 //comparing keyboard key inputs to zhuyin characters
 function initiateTestZH() {
     thisNum = 0;
+    testingCharCode = "";
     // console.log(toTypeBox.textContent.charAt(thisNum));
     toTypeBox.children[thisNum].classList.add('white');
     testingChar = toTypeBox.textContent.charAt(thisNum);
+    switch (testingChar) {
+        case "ㄧ":
+            testingCharCode = "u";
+            break;
+        case "ㄕ":
+            testingCharCode = "g";
+            break;
+        case "ㄝ":
+            testingCharCode = ",";
+            break;
+        case "ㄨ":
+            testingCharCode = "j";
+            break;
+        case "ㄉ":
+            testingCharCode = "2";
+            break;
+        case "ㄢ":
+            testingCharCode = "0";
+            break;
+        case "ㄒ":
+            testingCharCode = "v";
+            break;
+        case "ㄥ":
+            testingCharCode = "/";
+            break;
+        case "ㄅ":
+            testingCharCode = "1";
+            break;
+        case "ㄤ":
+            testingCharCode = ";";
+            break;
+        case "ㄑ":
+            testingCharCode = "f";
+            break;
+        case "ㄡ":
+            testingCharCode = ".";
+            break;
+        case "ㄐ":
+            testingCharCode = "r";
+            break;
+        case "ㄟ":
+            testingCharCode = "o";
+            break;
+        case "ㄌ":
+            testingCharCode = "x";
+            break;
+        case "ㄊ":
+            testingCharCode = "w";
+            break;
+        case "ㄜ":
+            testingCharCode = "k";
+            break;
+        case "ㄓ":
+            testingCharCode = "5";
+            break;
+        case "ㄆ":
+            testingCharCode = "q";
+            break;
+        case "ㄠ":
+            testingCharCode = "l";
+            break;
+        case "ㄩ":
+            testingCharCode = "m";
+            break;
+        case "ㄘ":
+            testingCharCode = "h";
+            break;
+        case "ㄣ":
+            testingCharCode = "p";
+            break;
+        case "ㄈ":
+            testingCharCode = "z";
+            break;
+        case "ㄔ":
+            testingCharCode = "t";
+            break;
+        case "ㄖ":
+            testingCharCode = "b";
+            break;
+        case "ㄇ":
+            testingCharCode = "a";
+            break;
+        case "ㄏ":
+            testingCharCode = "c";
+            break;
+        case "ㄋ":
+            testingCharCode = "s";
+            break;
+        case "ㄍ":
+            testingCharCode = "e";
+            break;
+        case "ㄗ":
+            testingCharCode = "y";
+            break;
+        case "ㄚ":
+            testingCharCode = "8";
+            break;
+        case "ㄎ":
+            testingCharCode = "d";
+            break;
+        case "ㄙ":
+            testingCharCode = "n";
+            break;
+        case "ㄛ":
+            testingCharCode = "i";
+            break;
+        case "ㄦ":
+            testingCharCode = "-";
+            break;
+    }
     document.addEventListener("keyup", (event) => {
+        event.preventDefault();
         // console.log(event.key);
-        if (event.key === testingChar) {
+        if (event.key === testingCharCode) {
             continueTestZH();
         }
     }, { once: true });
@@ -256,6 +382,7 @@ function continueTest() {
         testingChar = toTypeBox.textContent.charAt(thisNum);
         document.addEventListener("keyup", (event) => {
             console.log(event.key);
+            event.preventDefault();
             // console.log("SHOULD BE:", testingChar);
             if (testingChar === "_" && event.code === "Space") {
                 addHeart();
@@ -266,6 +393,149 @@ function continueTest() {
             } else { return }
         })
     }
+}
+document.addEventListener("keypress", (event) => {
+    event.preventDefault();
+})
+function continueTestZH() {
+    if (typeof toTypeBox.children[thisNum] === "undefined") {
+        let nuDiv = document.createElement('div');
+        nuDiv.classList.add('pixelheartBIG');
+        heartBox.append(nuDiv);
+        setTimeout(function () {
+            window.location.reload();
+        }, 3400);
+    } else {
+        thisNum++;
+        testingCharCode = "";
+        // console.log("num is now: ", thisNum);
+        toTypeBox.children[thisNum - 1].classList.remove('white');
+        toTypeBox.children[thisNum].classList.add('white');
+        testingChar = toTypeBox.textContent.charAt(thisNum);
+        switch (testingChar) {
+            case "ㄧ":
+                testingCharCode = "u";
+                break;
+            case "ㄕ":
+                testingCharCode = "g";
+                break;
+            case "ㄝ":
+                testingCharCode = ",";
+                break;
+            case "ㄨ":
+                testingCharCode = "j";
+                break;
+            case "ㄉ":
+                testingCharCode = "2";
+                break;
+            case "ㄢ":
+                testingCharCode = "0";
+                break;
+            case "ㄒ":
+                testingCharCode = "v";
+                break;
+            case "ㄥ":
+                testingCharCode = "/";
+                break;
+            case "ㄅ":
+                testingCharCode = "1";
+                break;
+            case "ㄤ":
+                testingCharCode = ";";
+                break;
+            case "ㄑ":
+                testingCharCode = "f";
+                break;
+            case "ㄡ":
+                testingCharCode = ".";
+                break;
+            case "ㄐ":
+                testingCharCode = "r";
+                break;
+            case "ㄟ":
+                testingCharCode = "o";
+                break;
+            case "ㄌ":
+                testingCharCode = "x";
+                break;
+            case "ㄊ":
+                testingCharCode = "w";
+                break;
+            case "ㄜ":
+                testingCharCode = "k";
+                break;
+            case "ㄓ":
+                testingCharCode = "5";
+                break;
+            case "ㄆ":
+                testingCharCode = "q";
+                break;
+            case "ㄠ":
+                testingCharCode = "l";
+                break;
+            case "ㄩ":
+                testingCharCode = "m";
+                break;
+            case "ㄘ":
+                testingCharCode = "h";
+                break;
+            case "ㄣ":
+                testingCharCode = "p";
+                break;
+            case "ㄈ":
+                testingCharCode = "z";
+                break;
+            case "ㄔ":
+                testingCharCode = "t";
+                break;
+            case "ㄖ":
+                testingCharCode = "b";
+                break;
+            case "ㄇ":
+                testingCharCode = "a";
+                break;
+            case "ㄏ":
+                testingCharCode = "c";
+                break;
+            case "ㄋ":
+                testingCharCode = "s";
+                break;
+            case "ㄍ":
+                testingCharCode = "e";
+                break;
+            case "ㄗ":
+                testingCharCode = "y";
+                break;
+            case "ㄚ":
+                testingCharCode = "8";
+                break;
+            case "ㄎ":
+                testingCharCode = "d";
+                break;
+            case "ㄙ":
+                testingCharCode = "n";
+                break;
+            case "ㄛ":
+                testingCharCode = "i";
+                break;
+            case "ㄦ":
+                testingCharCode = "-";
+                break;
+        }
+        document.addEventListener("keyup", (event) => {
+            console.log(event.key);
+            event.preventDefault();
+            // console.log("SHOULD BE:", testingChar);
+            if (testingChar === "_" && event.code === "Space") {
+                addHeart();
+                continueTestZH();
+            } else if (event.key === testingCharCode) {
+                addStar();
+                continueTestZH();
+            } else { return }
+        })
+    }
+    toTypeBox.focus();
 }
 var winHeight = window.innerHeight;
 var winWidth = window.innerWidth;
@@ -291,16 +561,20 @@ function toggleImg() {
     if (ZH) {
         if (checkBox.checked == true) {
             keyboardImgZH.style.display = "block";
+            toTypeBox.focus();
         } else {
             keyboardImgZH.style.display = "none";
             keyboardImgENG.style.display = "none";
+            toTypeBox.focus();
         }
     } else {
         if (checkBox.checked == true) {
             keyboardImgENG.style.display = "block";
+            toTypeBox.focus();
         } else {
             keyboardImgENG.style.display = "none";
             keyboardImgZH.style.display = "none";
+            toTypeBox.focus();
         }
     }
 
