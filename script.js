@@ -5,7 +5,9 @@ const numBox = document.querySelector('#numBox');
 var heartDivs = document.querySelectorAll('.pixelheart');
 var heartBox = document.querySelector('#heartBox');
 var checkBox = document.querySelector('#imgToggle');
-var keyboardImg = document.querySelector('#engKeyboard')
+var keyboardImgENG = document.querySelector('#engKeyboard')
+var keyboardImgZH = document.querySelector('#zhKeyboard')
+var langSwitch = document.querySelector('#langSwitch');
 let num = 6;
 let numberOfWords = 25;
 // let letterListArr = ["a", "s", "d", "f", "j", "k", "l", "e", "n", "i", "o", "b", "u", "t"];
@@ -18,8 +20,23 @@ let wholeString = "";
 let thisNum = 0;
 let testingChar;
 let ZH = false;
+function switchLang() {
+    if (ZH == false) {
+        ZH = true;
+        num = 8;
+        toggleImg();
+        pickWordsZH();
+    } else {
+        ZH = false
+        toggleImg();
+        pickWords();
+    }
+}
 if (ZH) {
     num = 8;
+    pickWordsZH();
+} else {
+    pickWords();
 }
 function letterCountDown() {
     if (ZH) {
@@ -56,26 +73,40 @@ function letterCountUp() {
     }
 }
 function wordCountDown() {
-    if (numberOfWords === 10) {
-        return
+    if (ZH) {
+        if (numberOfWords === 10) {
+            return
+        } else {
+            numberOfWords--;
+            pickWordsZH();
+        }
     } else {
-        numberOfWords--;
-        pickWords();
+        if (numberOfWords === 10) {
+            return
+        } else {
+            numberOfWords--;
+            pickWords();
+        }
     }
 };
 function wordCountUp() {
-    if (numberOfWords === 45) {
-        return
+    if (ZH) {
+        if (numberOfWords === 45) {
+            return
+        } else {
+            numberOfWords++;
+            pickWordsZH();
+        }
     } else {
-        numberOfWords++;
-        pickWords();
+        if (numberOfWords === 45) {
+            return
+        } else {
+            numberOfWords++;
+            pickWords();
+        }
     }
 }
-if (ZH) {
-    pickWordsZH()
-} else {
-    pickWords();
-}
+
 function pickWordsZH() {
     toTypeArr = [];
     nuTypeArr = [];
@@ -257,10 +288,20 @@ function addStar() {
     heartBox.append(nuDiv)
 }
 function toggleImg() {
-    if (checkBox.checked == true) {
-        keyboardImg.style.display = "block";
+    if (ZH) {
+        if (checkBox.checked == true) {
+            keyboardImgZH.style.display = "block";
+        } else {
+            keyboardImgZH.style.display = "none";
+            keyboardImgENG.style.display = "none";
+        }
     } else {
-        keyboardImg.style.display = "none";
+        if (checkBox.checked == true) {
+            keyboardImgENG.style.display = "block";
+        } else {
+            keyboardImgENG.style.display = "none";
+            keyboardImgZH.style.display = "none";
+        }
     }
 
 }
