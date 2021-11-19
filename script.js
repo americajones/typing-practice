@@ -7,41 +7,61 @@ var heartBox = document.querySelector('#heartBox');
 var checkBox = document.querySelector('#imgToggle');
 var keyboardImgENG = document.querySelector('#engKeyboard')
 var keyboardImgZH = document.querySelector('#zhKeyboard')
+var keyboardImgRUS = document.querySelector('#rusKeyboard')
 var langSwitch = document.querySelector('#langSwitch');
-let num = 6;
 let numberOfWords = 25;
-// let letterListArr = ["a", "s", "d", "f", "j", "k", "l", "e", "n", "i", "o", "b", "u", "t"];
 let fullLetterList = "enitrlsauodychgmpbkvwfzxqj";
 let fullLetterListZH = "ㄧㄕㄝㄨㄉㄢㄒㄥㄅㄤㄑㄡㄐㄟㄌㄊㄜㄓㄆㄠㄩㄘㄣㄈㄔㄖㄇㄏㄋㄍㄗㄚㄎㄙㄛㄦ";
+// let fullLetterListRUS = "ЕИАОТНЛРКУМВСЯЬЫДЙЮГЧШХЗБПЖЩЦФЪЭЁ";
+let fullLetterListRUS = "еиаотнлркумвсяьыдйюгчшхзбпжщфъэё";
+
 let wordArray;
 let toTypeArr = [];
 let nuTypeArr = [];
 let wholeString = "";
 let thisNum = 0;
 let testingChar;
+let ENG = true;
 let ZH = false;
-function switchLang() {
-    if (ZH === false) {
-        ZH = true;
-        num = 8;
-        keyboardImgENG.style.display = "none";
-        checkBox.checked = false;
-        pickWordsZH();
-        toTypeBox.focus();
-    } else {
-        ZH = false
-        keyboardImgZH.style.display = "none";
-        checkBox.checked = false;
-        pickWords();
-        toTypeBox.focus();
-    }
+let RUS = false;
+
+let num = 6;
+function zhLang() {
+    ZH = true;
+    ENG = false;
+    RUS = false;
+    num = 8;
+    keyboardImgENG.style.display = "none";
+    keyboardImgRUS.style.display = "none";
+    checkBox.checked = false;
+    pickWordsZH();
+}
+function engLang() {
+    ENG = true;
+    ZH = false;
+    RUS = false;
+    keyboardImgZH.style.display = "none";
+    keyboardImgRUS.style.display = "none";
+    checkBox.checked = false;
+    pickWords();
+}
+function rusLang() {
+    RUS = true;
+    ENG = false;
+    ZH = false;
+    keyboardImgZH.style.display = "none";
+    keyboardImgENG.style.display = "none";
+    checkBox.checked = false;
+    pickWordsRUS();
 }
 if (ZH) {
     num = 8;
     pickWordsZH();
-} else {
-    pickWords();
-}
+} else if (RUS) {
+    num = 8;
+    pickWordsRUS();
+} else { pickWords() };
+
 function letterCountDown() {
     if (ZH) {
         if (num === 8) {
@@ -49,6 +69,14 @@ function letterCountDown() {
         } else {
             num--;
             pickWordsZH();
+            toTypeBox.focus();
+        }
+    } else if (RUS) {
+        if (num === 8) {
+            return
+        } else {
+            num--;
+            pickWordsRUS();
             toTypeBox.focus();
         }
     } else {
@@ -70,6 +98,14 @@ function letterCountUp() {
             pickWordsZH();
             toTypeBox.focus();
         }
+    } else if (RUS) {
+        if (num === 32) {
+            return
+        } else {
+            num++;
+            pickWordsRUS();
+            toTypeBox.focus();
+        }
     } else {
         if (num === 26) {
             return
@@ -87,6 +123,14 @@ function wordCountDown() {
         } else {
             numberOfWords--;
             pickWordsZH();
+            toTypeBox.focus();
+        }
+    } else if (RUS) {
+        if (numberOfWords === 10) {
+            return
+        } else {
+            numberOfWords--;
+            pickWordsRUS();
             toTypeBox.focus();
         }
     } else {
@@ -108,6 +152,14 @@ function wordCountUp() {
             pickWordsZH();
             toTypeBox.focus();
         }
+    } else if (RUS) {
+        if (numberOfWords === 45) {
+            return
+        } else {
+            numberOfWords++;
+            pickWordsRUS();
+            toTypeBox.focus();
+        }
     } else {
         if (numberOfWords === 45) {
             return
@@ -119,6 +171,28 @@ function wordCountUp() {
     }
 }
 
+function pickWordsRUS() {
+    toTypeArr = [];
+    nuTypeArr = [];
+    removeAllChildren(toTypeBox);
+    let letterList = fullLetterListRUS.substring(0, num);
+    numBox.textContent = num + " letters";
+    wordNumBox.textContent = numberOfWords + " words";
+    russianWords.forEach(word => {
+        wordArray = [];
+        for (let i = 0; i < word.length; i++) {
+            if (!letterList.includes(word[i])) {
+                return;
+            } else {
+                wordArray.push(word);
+            }
+        }
+        if (wordArray.length === word.length) {
+            toTypeArr.push(word);
+        };
+    });
+    shuffleAndPostRUS();
+}
 function pickWordsZH() {
     toTypeArr = [];
     nuTypeArr = [];
@@ -126,26 +200,19 @@ function pickWordsZH() {
     let letterList = fullLetterListZH.substring(0, num);
     numBox.textContent = num + " letters";
     wordNumBox.textContent = numberOfWords + " words";
-    // console.log(letterList)
-    zhuyinWords.forEach(word => {
+    zhWords.forEach(word => {
         wordArray = [];
         for (let i = 0; i < word.length; i++) {
             if (!letterList.includes(word[i])) {
-                // console.log("YES: ", word);
-                // wordArray.push(word);
                 return;
             } else {
                 wordArray.push(word);
             }
         }
-        // console.log(wordArray.length)
         if (wordArray.length === word.length) {
-            // console.log(word);
             toTypeArr.push(word);
         };
     });
-    // console.log(wordArray)
-    // console.log(toTypeArr)
     shuffleAndPostZH();
 }
 function pickWords() {
@@ -225,6 +292,32 @@ function shuffleAndPostZH() {
     })
     toTypeBox.focus();
     initiateTestZH();
+}
+function shuffleAndPostRUS() {
+    // console.log("before: ", toTypeArr);
+    shuffleArray(toTypeArr);
+    // console.log("after ", toTypeArr);
+    for (let i = 0; i < numberOfWords; i++) {
+        nuTypeArr.push(toTypeArr[i])
+        // console.log(toTypeArr[i]);
+    }
+    nuTypeArr.forEach(word => {
+        let nuDiv = document.createElement('div');
+        nuDiv.textContent = word + "_";
+        toTypeBox.append(nuDiv);
+    });
+    wholeString = toTypeBox.textContent;
+    let nuArr = wholeString.split("");
+    removeAllChildren(toTypeBox);
+    removeAllChildren(heartBox);
+    nuArr.forEach(letter => {
+        let nuItem = "<span class='textInputItem'>" + letter + "</span>";
+        let nuDiv = document.createElement('div');
+        nuDiv.innerHTML = nuItem;
+        toTypeBox.append(nuDiv)
+    })
+    toTypeBox.focus();
+    initiateTestRUS();
 }
 function initiateTest() {
     thisNum = 0;
@@ -366,6 +459,121 @@ function initiateTestZH() {
         }
     }, { once: true });
 };
+function initiateTestRUS() {
+    thisNum = 0;
+    testingCharCode = "";
+    // console.log(toTypeBox.textContent.charAt(thisNum));
+    toTypeBox.children[thisNum].classList.add('white');
+    testingChar = toTypeBox.textContent.charAt(thisNum);
+    switch (testingChar) {
+        case "г":
+            testingCharCode = "u";
+            break;
+        case "п":
+            testingCharCode = "g";
+            break;
+        case "б":
+            testingCharCode = ",";
+            break;
+        case "ю":
+            testingCharCode = ".";
+            break;
+        case "о":
+            testingCharCode = "j";
+            break;
+        case "ё":
+            testingCharCode = "`";
+            break;
+        case "х":
+            testingCharCode = "[";
+            break;
+        case "ъ":
+            testingCharCode = "]";
+            break;
+        case "м":
+            testingCharCode = "v";
+            break;
+        case "ж":
+            testingCharCode = ";";
+            break;
+        case "а":
+            testingCharCode = "f";
+            break;
+        case "к":
+            testingCharCode = "r";
+            break;
+        case "щ":
+            testingCharCode = "o";
+            break;
+        case "ч":
+            testingCharCode = "x";
+            break;
+        case "ц":
+            testingCharCode = "w";
+            break;
+        case "л":
+            testingCharCode = "k";
+            break;
+        case "й":
+            testingCharCode = "q";
+            break;
+        case "д":
+            testingCharCode = "l";
+            break;
+        case "ь":
+            testingCharCode = "m";
+            break;
+        case "р":
+            testingCharCode = "h";
+            break;
+        case "з":
+            testingCharCode = "p";
+            break;
+        case "я":
+            testingCharCode = "z";
+            break;
+        case "е":
+            testingCharCode = "t";
+            break;
+        case "и":
+            testingCharCode = "b";
+            break;
+        case "ф":
+            testingCharCode = "a";
+            break;
+        case "с":
+            testingCharCode = "c";
+            break;
+        case "ы":
+            testingCharCode = "s";
+            break;
+        case "у":
+            testingCharCode = "e";
+            break;
+        case "н":
+            testingCharCode = "y";
+            break;
+        case "в":
+            testingCharCode = "d";
+            break;
+        case "т":
+            testingCharCode = "n";
+            break;
+        case "ш":
+            testingCharCode = "i";
+            break;
+        case "э":
+            testingCharCode = "'";
+            break;
+    }
+    document.addEventListener("keyup", (event) => {
+        event.preventDefault();
+        // console.log(event.key);
+        if (event.key === testingCharCode) {
+            continueTestRUS();
+        }
+    }, { once: true });
+};
 function continueTest() {
     if (typeof toTypeBox.children[thisNum] === "undefined") {
         let nuDiv = document.createElement('div');
@@ -386,9 +594,11 @@ function continueTest() {
             // console.log("SHOULD BE:", testingChar);
             if (testingChar === "_" && event.code === "Space") {
                 addHeart();
+                testingCharCode = "";
                 continueTest();
             } else if (event.key === testingChar) {
                 addStar();
+                testingCharCode = "";
                 continueTest();
             } else { return }
         })
@@ -528,10 +738,145 @@ function continueTestZH() {
             console.log("SHOULD BE:", testingChar);
             if (testingChar === "_" && event.code === "Space") {
                 addHeart();
+                testingCharCode = "";
                 continueTestZH();
             } else if (event.key === testingCharCode) {
                 addStar();
+                testingCharCode = "";
                 continueTestZH();
+            } else { return }
+        })
+    }
+    toTypeBox.focus();
+}
+function continueTestRUS() {
+    if (typeof toTypeBox.children[thisNum] === "undefined") {
+        let nuDiv = document.createElement('div');
+        nuDiv.classList.add('pixelheartBIG');
+        heartBox.append(nuDiv);
+        setTimeout(function () {
+            window.location.reload();
+        }, 3400);
+    } else {
+        thisNum++;
+        testingCharCode = "";
+        // console.log("num is now: ", thisNum);
+        toTypeBox.children[thisNum - 1].classList.remove('white');
+        toTypeBox.children[thisNum].classList.add('white');
+        testingChar = toTypeBox.textContent.charAt(thisNum);
+        switch (testingChar) {
+            case "г":
+                testingCharCode = "u";
+                break;
+            case "п":
+                testingCharCode = "g";
+                break;
+            case "б":
+                testingCharCode = ",";
+                break;
+            case "ю":
+                testingCharCode = ".";
+                break;
+            case "о":
+                testingCharCode = "j";
+                break;
+            case "ё":
+                testingCharCode = "`";
+                break;
+            case "х":
+                testingCharCode = "[";
+                break;
+            case "ъ":
+                testingCharCode = "]";
+                break;
+            case "м":
+                testingCharCode = "v";
+                break;
+            case "ж":
+                testingCharCode = ";";
+                break;
+            case "а":
+                testingCharCode = "f";
+                break;
+            case "к":
+                testingCharCode = "r";
+                break;
+            case "щ":
+                testingCharCode = "o";
+                break;
+            case "ч":
+                testingCharCode = "x";
+                break;
+            case "ц":
+                testingCharCode = "w";
+                break;
+            case "л":
+                testingCharCode = "k";
+                break;
+            case "й":
+                testingCharCode = "q";
+                break;
+            case "д":
+                testingCharCode = "l";
+                break;
+            case "ь":
+                testingCharCode = "m";
+                break;
+            case "р":
+                testingCharCode = "h";
+                break;
+            case "з":
+                testingCharCode = "p";
+                break;
+            case "я":
+                testingCharCode = "z";
+                break;
+            case "е":
+                testingCharCode = "t";
+                break;
+            case "и":
+                testingCharCode = "b";
+                break;
+            case "ф":
+                testingCharCode = "a";
+                break;
+            case "с":
+                testingCharCode = "c";
+                break;
+            case "ы":
+                testingCharCode = "s";
+                break;
+            case "у":
+                testingCharCode = "e";
+                break;
+            case "н":
+                testingCharCode = "y";
+                break;
+            case "в":
+                testingCharCode = "d";
+                break;
+            case "т":
+                testingCharCode = "n";
+                break;
+            case "ш":
+                testingCharCode = "i";
+                break;
+            case "э":
+                testingCharCode = "'";
+                break;
+        }
+        document.addEventListener("keyup", (event) => {
+            console.log(event.key);
+            event.preventDefault();
+            console.log("SHOULD BE:", testingChar);
+            if (testingChar === "_" && event.code === "Space") {
+                addHeart();
+                testingCharCode = "";
+                continueTestRUS();
+            } else if (event.key === testingCharCode) {
+                addStar();
+                testingCharCode = "";
+                continueTestRUS();
             } else { return }
         })
     }
@@ -567,26 +912,27 @@ function toggleImg() {
             keyboardImgENG.style.display = "none";
             toTypeBox.focus();
         }
-    } else {
+    } else if (RUS) {
         if (checkBox.checked == true) {
-            keyboardImgENG.style.display = "block";
+            keyboardImgRUS.style.display = "block";
             toTypeBox.focus();
         } else {
             keyboardImgENG.style.display = "none";
             keyboardImgZH.style.display = "none";
             toTypeBox.focus();
         }
+    } else {
+        if (checkBox.checked == true) {
+            keyboardImgENG.style.display = "block";
+            toTypeBox.focus();
+        } else {
+            keyboardImgRUS.style.display = "none";
+            keyboardImgZH.style.display = "none";
+            toTypeBox.focus();
+        }
     }
 
 }
-// console.log(heartDivs);
-// for (var i = 0; i < heartDivs.length; i++) {
-//     var thisDiv = heartDivs[i];
-//     randomTop = getRandomNumber(0, winHeight);
-//     randomLeft = getRandomNumber(0, winWidth);
-//     thisDiv.style.top = randomTop + 'px';
-//     thisDiv.style.left = randomLeft + 'px';
-// }
 
 function getRandomNumber(min, max) {
     return Math.random() * (max - min) + min;
