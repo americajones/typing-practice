@@ -26,6 +26,7 @@ let ZH = false;
 let RUS = false;
 
 let num = 6;
+pickWords();
 function zhLang() {
     ZH = true;
     ENG = false;
@@ -49,19 +50,12 @@ function rusLang() {
     RUS = true;
     ENG = false;
     ZH = false;
+    num = 8;
     keyboardImgZH.style.display = "none";
     keyboardImgENG.style.display = "none";
     checkBox.checked = false;
     pickWordsRUS();
 }
-if (ZH) {
-    num = 8;
-    pickWordsZH();
-} else if (RUS) {
-    num = 8;
-    pickWordsRUS();
-} else { pickWords() };
-
 function letterCountDown() {
     if (ZH) {
         if (num === 8) {
